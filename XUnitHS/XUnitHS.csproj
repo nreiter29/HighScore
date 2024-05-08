@@ -20,4 +20,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BLHS\BLHS.csproj" />
+    <ProjectReference Include="..\DALHS\DALHS.csproj" />
+  </ItemGroup>
+
 </Project>

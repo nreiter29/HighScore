@@ -1,16 +1,13 @@
-﻿namespace ModelsHS
+﻿namespace DTOsHS
 {
-    public class Player : Details
+    public class PlayerDetail
     {
         public int PlayerId { get; set; }
         public string FName { get; set; } = string.Empty;
         public string LName { get; set; } = string.Empty;
         public DateOnly BirthDay { get; set; }
-        public string PwHash { get; set; } = string.Empty;
-
-        public string FullName
-        {
-            get { return LName + " " + FName; }
-        }
+        public string? Notes { get; set; }
+        public DateTime Entry { get; set; }
+        public DateTime? Exit { get; set; }
     }
 }
