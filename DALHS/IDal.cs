@@ -10,32 +10,37 @@
         void Rollback();
 
         #region Events
+
         /// <summary>
         /// When Players are loaded
         /// </summary>
         public event EventHandler<string>? PlayersLoaded;
+
         /// <summary>
         /// When Players are saved
         /// </summary>
         public event EventHandler<string>? PlayerSaved;
-        
+
         /// <summary>
         /// When Games are loaded
         /// </summary>
         public event EventHandler<string>? GamesLoaded;
+
         /// <summary>
         /// When Games are saved
         /// </summary>
         public event EventHandler<string>? GameSaved;
-        
+
         /// <summary>
         /// When HighScores are loaded
         /// </summary>
         public event EventHandler<string>? HighScoresLoaded;
+
         /// <summary>
         /// When HighScores are saved
         /// </summary>
         public event EventHandler<string>? HighScoreSaved;
+
         #endregion
 
     }

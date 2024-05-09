@@ -43,7 +43,7 @@
                     return 0;
                 }
             }
-            
+
             if (_highScores is not null)
             {
                 try
@@ -126,7 +126,7 @@
                 player = new List<Player>();
             }
 
-            return player;  
+            return player;
         }
 
         protected override List<HighScore> LoadHighScores()
