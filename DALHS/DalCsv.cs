@@ -43,6 +43,25 @@
                     return 0;
                 }
             }
+            
+            if (_highScores is not null)
+            {
+                try
+                {
+                    using StreamWriter file = new(FilePath + @"\Highscores.csv");
+                    foreach (var highScore in _highScores)
+                    {
+                        file.WriteLine(
+                            $"{highScore.PlayerId};{highScore.GameId};{highScore.Score};{highScore.Created}");
+                    }
+
+                    count += _highScores.Count;
+                }
+                catch (Exception ex)
+                {
+                    return 0;
+                }
+            }
 
             return count;
         }
