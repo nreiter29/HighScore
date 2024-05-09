@@ -33,7 +33,7 @@
                     foreach (var player in _players)
                     {
                         file.WriteLine(
-                            $"{player.PlayerId};{player.FName};{player.LName};{player.FullName};{player.Entry};{player.Exit};{player.ModifiedBy};{player.LastModified};{player.Notes}");
+                            $"{player.PlayerId};{player.FName};{player.LName};{player.Entry};{player.Exit};{player.ModifiedBy};{player.LastModified};{player.Notes}");
                     }
 
                     count += _players.Count;
@@ -48,7 +48,7 @@
             {
                 try
                 {
-                    using StreamWriter file = new(FilePath + @"\Highscores.csv");
+                    using StreamWriter file = new(FilePath + @"\HighScores.csv");
                     foreach (var highScore in _highScores)
                     {
                         file.WriteLine(
@@ -68,17 +68,92 @@
 
         protected override List<Game> LoadGames()
         {
-            throw new NotImplementedException();
+            List<Game>? game = new List<Game>();
+            try
+            {
+                using StreamReader file = new(FilePath + @"\Games.csv");
+                string line;
+                while ((line = file.ReadLine()) is not null)
+                {
+                    var parts = line.Split(';', StringSplitOptions.None);
+                    game.Add(new Game
+                    {
+                        GameId = int.Parse(parts[0]),
+                        Title = parts[1],
+                        Publisher = parts[2],
+                        ReleaseDate = DateOnly.Parse(parts[3]),
+                        Entry = DateTime.Parse(parts[4]),
+                        Exit = DateTime.Parse(parts[5]),
+                        ModifiedBy = parts[6],
+                        LastModified = DateTime.Parse(parts[7]),
+                        Notes = parts[8]
+                    });
+                }
+            }
+            catch
+            {
+                game = new List<Game>();
+            }
+
+            return game;
         }
 
         protected override List<Player> LoadPlayers()
         {
-            throw new NotImplementedException();
+            List<Player>? player = new List<Player>();
+            try
+            {
+                using StreamReader file = new(FilePath + @"\Players.csv");
+                string line;
+                while ((line = file.ReadLine()) is not null)
+                {
+                    var parts = line.Split(';', StringSplitOptions.None);
+                    player.Add(new Player
+                    {
+                        PlayerId = int.Parse(parts[0]),
+                        FName = parts[1],
+                        LName = parts[2],
+                        Entry = DateTime.Parse(parts[3]),
+                        Exit = DateTime.Parse(parts[4]),
+                        ModifiedBy = parts[5],
+                        LastModified = DateTime.Parse(parts[6]),
+                        Notes = parts[7]
+                    });
+                }
+            }
+            catch
+            {
+                player = new List<Player>();
+            }
+
+            return player;  
         }
 
         protected override List<HighScore> LoadHighScores()
         {
-            throw new NotImplementedException();
+            List<HighScore>? highScore = new List<HighScore>();
+            try
+            {
+                using StreamReader file = new(FilePath + @"\HighScores.csv");
+                string line;
+                while ((line = file.ReadLine()) is not null)
+                {
+                    var parts = line.Split(';', StringSplitOptions.None);
+                    highScore.Add(new HighScore
+                    {
+                        PlayerId = int.Parse(parts[0]),
+                        GameId = int.Parse(parts[1]),
+                        Score = int.Parse(parts[2]),
+                        Created = DateTime.Parse(parts[3])
+                    });
+                }
+            }
+            catch
+            {
+                highScore = new List<HighScore>();
+            }
+
+            return highScore;
         }
     }
 }
