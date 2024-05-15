@@ -105,7 +105,7 @@ namespace BLHS.Repos
                 LName = player.LName,
                 BirthDay = player.BirthDay,
                 Entry = player.Entry,
-                Exit = player.Exit,
+                Exit = null,
                 Notes = player.Notes,
                 PwHash = player.Pw,
             };

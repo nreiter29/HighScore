@@ -9,6 +9,7 @@ namespace BLHS
         IDal _dal;
         GameRepo? _gameRepo;
         PlayerRepo? _playerRepo;
+        HighScoreRepo? _highScoreRepo;
 
         public UnitOfWork(DalType dalType)
         {
@@ -22,6 +23,7 @@ namespace BLHS
 
         public GameRepo Games => _gameRepo ??= new GameRepo(_dal);
         public PlayerRepo Players => _playerRepo ??= new PlayerRepo(_dal);
+        public HighScoreRepo HIghScores => _highScoreRepo ??= new HighScoreRepo(_dal);
 
         public int Commit()
         {

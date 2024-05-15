@@ -35,7 +35,7 @@ namespace BLHS.Repos
                     ValueMember = g.GameId,
                     DisplayMember = g.Title,
                 };
-            
+
             return games.ToList();
         }
 
@@ -68,7 +68,7 @@ namespace BLHS.Repos
                     ReleaseDate = g.ReleaseDate,
                     Title = g.Title,
                 };
-            
+
             return games.ToList();
         }
 
@@ -78,15 +78,16 @@ namespace BLHS.Repos
             {
                 Game newGame = new Game()
                 {
-                    GameId = gameDetail.GameId,
+                    GameId = _dal.Games.Max(g => g.GameId) + 1,
                     Title = gameDetail.Title,
                     ReleaseDate = gameDetail.ReleaseDate,
-                    Exit = gameDetail.Exit,
+                    Entry = gameDetail.Entry,
+                    Exit = null,
                     Notes = gameDetail.Notes,
                 };
                 _dal.Games.Add(newGame);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return false;
             }
@@ -104,7 +105,7 @@ namespace BLHS.Repos
             gameToUpdate.ReleaseDate = gameDetail.ReleaseDate;
             gameToUpdate.Exit = gameDetail.Exit;
             gameToUpdate.Notes = gameDetail.Notes;
-            
+
             return true;
         }
 
@@ -113,7 +114,7 @@ namespace BLHS.Repos
             var gameToDelete = _dal.Games.Find(g => g.GameId == gameId);
             if (gameToDelete is null)
                 return false;
-            
+
             _dal.Games.Remove(gameToDelete);
             return true;
         }

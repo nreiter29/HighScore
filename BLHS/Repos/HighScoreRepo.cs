@@ -25,28 +25,28 @@ namespace BLHS.Repos
             return highscores.ToList();
         }
 
-        public List<HighScoreIndex> GetHighscoresByGame(int gameId)
+        public List<HighScoreGameIndex> GetHighscoresByGame(int gameId)
         {
             var highscores = from h in _dal.HighScores
                 where h.GameId == gameId
-                select new HighScoreIndex
+                select new HighScoreGameIndex
                 {
-                    PlayerId = h.PlayerId,
                     Score = h.Score,
-                    Created = h.Created
+                    Created = h.Created,
+                    GameId = h.GameId,
                 };
             return highscores.ToList();
         }
 
-        public List<HighScoreIndex> GetHighscoresByPlayer(int playerId)
+        public List<HighScorePlayerIndex> GetHighscoresByPlayer(int playerId)
         {
             var highscores = from h in _dal.HighScores
                 where h.PlayerId == playerId
-                select new HighScoreIndex
+                select new HighScorePlayerIndex()
                 {
                     PlayerId = h.PlayerId,
                     Score = h.Score,
-                    Created = h.Created
+                    Created = h.Created,
                 };
             return highscores.ToList();
         }
