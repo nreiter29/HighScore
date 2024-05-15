@@ -28,7 +28,15 @@ namespace BLHS.Repos
 
         public List<SelectItem> GetGameSelect()
         {
-            throw new NotImplementedException();
+            var games = from g in _dal.Games
+                where g.Exit == null || g.Exit > DateTime.Now
+                select new SelectItem()
+                {
+                    ValueMember = g.GameId,
+                    DisplayMember = g.Title,
+                };
+            
+            return games.ToList();
         }
 
         public GameDetail GetGame(int gameId)
@@ -66,22 +74,53 @@ namespace BLHS.Repos
 
         public bool Add(GameDetail gameDetail)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Game newGame = new Game()
+                {
+                    GameId = gameDetail.GameId,
+                    Title = gameDetail.Title,
+                    ReleaseDate = gameDetail.ReleaseDate,
+                    Exit = gameDetail.Exit,
+                    Notes = gameDetail.Notes,
+                };
+                _dal.Games.Add(newGame);
+            }
+            catch (Exception e) 
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public bool Update(GameDetail gameDetail)
         {
-            throw new NotImplementedException();
+            var gameToUpdate = _dal.Games.Find(g => g.GameId == gameDetail.GameId);
+            if (gameToUpdate is null)
+                return false;
+
+            gameToUpdate.Title = gameDetail.Title;
+            gameToUpdate.ReleaseDate = gameDetail.ReleaseDate;
+            gameToUpdate.Exit = gameDetail.Exit;
+            gameToUpdate.Notes = gameDetail.Notes;
+            
+            return true;
         }
 
         public bool Delete(int gameId)
         {
-            throw new NotImplementedException();
+            var gameToDelete = _dal.Games.Find(g => g.GameId == gameId);
+            if (gameToDelete is null)
+                return false;
+            
+            _dal.Games.Remove(gameToDelete);
+            return true;
         }
 
         public bool Delete(Game game)
         {
-            throw new NotImplementedException();
+            return _dal.Games.Remove(game);
         }
     }
 }
