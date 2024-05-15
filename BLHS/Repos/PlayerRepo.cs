@@ -4,53 +4,160 @@ using ModelsHS;
 
 namespace BLHS.Repos
 {
-    public class PlayerRepo: IPlayerRepo
+    public class PlayerRepo : IPlayerRepo
     {
-        IDal? _dal;
+        IDal _dal;
 
         public PlayerRepo(IDal dal)
         {
             _dal = dal;
         }
 
+        /// <summary>
+        /// gets all players
+        /// </summary>
+        /// <returns></returns>
         public List<PlayerIndex> GetPlayers()
         {
-            throw new NotImplementedException();
+            var players = from p in _dal.Players
+                where p.Exit == null || p.Exit > DateTime.Now
+                select new PlayerIndex()
+                {
+                    PlayerId = p.PlayerId,
+                    FullName = p.FName + " " + p.LName,
+                    BirthDay = p.BirthDay,
+                };
+            return players.ToList();
         }
 
+        /// <summary>
+        /// gets all players for use in a combobox
+        /// </summary>
+        /// <returns></returns>
         public List<SelectItem> GetPlayerSelect()
         {
-            throw new NotImplementedException();
+            var players = from p in _dal.Players
+                where p.Exit == null || p.Exit > DateTime.Now
+                select new SelectItem()
+                {
+                    ValueMember = p.PlayerId,
+                    DisplayMember = p.FName + " " + p.LName,
+                };
+            return players.ToList();
         }
 
-        public PlayerDetail GetPlayer(int gameId)
+        /// <summary>
+        /// gets a player by playerId
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public PlayerDetail GetPlayer(int playerId)
         {
-            throw new NotImplementedException();
+            var player = _dal.Players.Find(p => p.PlayerId == playerId || p.Exit > DateTime.Now);
+            if (player is null)
+            {
+                return null;
+            }
+
+            PlayerDetail playerDetail = new()
+            {
+                PlayerId = player.PlayerId,
+                FName = player.FName,
+                LName = player.LName,
+                BirthDay = player.BirthDay,
+                Entry = player.Entry,
+                Exit = player.Exit,
+                Notes = player.Notes,
+            };
+            return playerDetail;
         }
 
-        public List<PlayerIndex> GetPlayersByGame(int playerId)
+        /// <summary>
+        /// get all players by game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public List<PlayerIndex> GetPlayersByGame(int gameId)
         {
-            throw new NotImplementedException();
+            var players = from p in _dal.Players
+                join h in _dal.HighScores on p.PlayerId equals h.PlayerId
+                where h.GameId == gameId && p.Exit == null || p.Exit > DateTime.Now
+                select new PlayerIndex()
+                {
+                    PlayerId = p.PlayerId,
+                    FullName = p.FName + " " + p.LName,
+                    BirthDay = p.BirthDay,
+                };
+            return players.ToList();
         }
 
-        public bool Add(PlayerAdd playerDetail)
+        /// <summary>
+        /// Adds a player to the database
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public bool Add(PlayerAdd player)
         {
-            throw new NotImplementedException();
+            Player newPlayer = new()
+            {
+                PlayerId = _dal.Players.Max(p => p.PlayerId) + 1,
+                FName = player.FName,
+                LName = player.LName,
+                BirthDay = player.BirthDay,
+                Entry = player.Entry,
+                Exit = player.Exit,
+                Notes = player.Notes,
+                PwHash = player.Pw,
+            };
+            _dal.Players.Add(newPlayer);
+            return true;
         }
 
-        public bool Update(GameDetail gameDetail)
+        /// <summary>
+        /// Updates a player in the database
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public bool Update(PlayerDetail player)
         {
-            throw new NotImplementedException();
+            var playerToUpdate = _dal.Players.Find(p => p.PlayerId == player.PlayerId);
+            if (playerToUpdate is null)
+            {
+                return false;
+            }
+
+            playerToUpdate.FName = player.FName;
+            playerToUpdate.LName = player.LName;
+            playerToUpdate.BirthDay = player.BirthDay;
+            playerToUpdate.Entry = player.Entry;
+            playerToUpdate.Exit = player.Exit;
+            playerToUpdate.Notes = player.Notes;
+            return true;
         }
 
-        public bool Delete(int gameId)
+        /// <summary>
+        /// deletes a player from the database by playerId
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public bool Delete(int playerId)
         {
-            throw new NotImplementedException();
+            var playerToDelete = _dal.Players.Find(p => p.PlayerId == playerId);
+            if (playerToDelete is null)
+                return false;
+
+            _dal.Players.Remove(playerToDelete);
+            return true;
         }
 
-        public bool Delete(Game game)
+        /// <summary>
+        /// deletes a player from the database
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public bool Delete(Player player)
         {
-            throw new NotImplementedException();
+            return _dal.Players.Remove(player);
         }
     }
 }

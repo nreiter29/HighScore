@@ -7,12 +7,11 @@ namespace BLHS.Repos
     {
         List<PlayerIndex> GetPlayers();
         List<SelectItem> GetPlayerSelect();
-        PlayerDetail GetPlayer(int gameId);
-        List<PlayerIndex> GetPlayersByGame(int playerId);
-        
-        bool Add(PlayerAdd playerDetail);
-        bool Update(GameDetail gameDetail);
-        bool Delete(int gameId);
-        bool Delete(Game game);
+        PlayerDetail GetPlayer(int playerId);
+        List<PlayerIndex> GetPlayersByGame(int gameId);
+        bool Add(PlayerAdd player);
+        bool Update(PlayerDetail player);
+        bool Delete(int playerId);
+        bool Delete(Player player);
     }
 }

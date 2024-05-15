@@ -9,7 +9,7 @@ namespace BLHS.Repos
         List<SelectItem> GetGameSelect();
         GameDetail GetGame(int gameId);
         List<GameIndex> GetGamesByPlayer(int playerId);
-        
+
         bool Add(GameDetail gameDetail);
         bool Update(GameDetail gameDetail);
         bool Delete(int gameId);

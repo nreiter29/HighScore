@@ -9,11 +9,12 @@ namespace XUnitHS;
 public class GameRepoUnitTest : IDisposable
 {
     Mock<IDal> mockDal;
+
     GameRepo gameRepo
     {
         get => new GameRepo(mockDal.Object);
     }
-    
+
     public GameRepoUnitTest()
     {
         Setup();
@@ -45,7 +46,7 @@ public class GameRepoUnitTest : IDisposable
             new HighScore { GameId = 1, PlayerId = 1 },
             new HighScore { GameId = 2, PlayerId = 1 },
         });
-        
+
         // Act
         var result = gameRepo.GetGamesByPlayer(1);
 
@@ -77,7 +78,7 @@ public class GameRepoUnitTest : IDisposable
         // Assert
         Assert.Empty(result);
     }
-    
+
     [Fact]
     public void GetGames_ReturnsGames()
     {
@@ -96,7 +97,7 @@ public class GameRepoUnitTest : IDisposable
         Assert.Equal(1, result[0].GameId);
         Assert.Equal(2, result[1].GameId);
     }
-    
+
     [Fact]
     public void Add_ReturnsTrue_WhenGameDetailIsValid()
     {
@@ -105,7 +106,7 @@ public class GameRepoUnitTest : IDisposable
         {
             new Game { GameId = 1, Title = "Game 1" },
         });
-        
+
         var gameDetail = new GameDetail
         {
             Title = "Test Game",
@@ -122,6 +123,7 @@ public class GameRepoUnitTest : IDisposable
 
         // Assert
         Assert.True(result);
+        Assert.Equal(2, mockDal.Object.Games.Count);
     }
 
     [Fact]
@@ -136,7 +138,7 @@ public class GameRepoUnitTest : IDisposable
         // Assert
         Assert.False(result);
     }
-    
+
     [Fact]
     public void GetGameSelect_ReturnsGamesWithFutureExitDates()
     {
@@ -156,7 +158,7 @@ public class GameRepoUnitTest : IDisposable
         Assert.Contains(result, r => r.DisplayMember == "Game 1");
         Assert.Contains(result, r => r.DisplayMember == "Game 2");
     }
-    
+
     [Fact]
     public void Update_ReturnsTrue_WhenGameExists()
     {
@@ -186,7 +188,7 @@ public class GameRepoUnitTest : IDisposable
         // Assert
         Assert.False(result);
     }
-    
+
     [Fact]
     public void DeleteWithGameId_ReturnsTrue_WhenGameExists()
     {
@@ -217,7 +219,7 @@ public class GameRepoUnitTest : IDisposable
         // Assert
         Assert.False(result);
     }
-    
+
     [Fact]
     public void DeleteWithGame_ReturnsTrue_WhenGameExists()
     {
