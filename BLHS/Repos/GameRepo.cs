@@ -33,12 +33,35 @@ namespace BLHS.Repos
 
         public GameDetail GetGame(int gameId)
         {
-            throw new NotImplementedException();
+            var games = from g in _dal.Games
+                where g.GameId == gameId
+                select new GameDetail
+                {
+                    GameId = g.GameId,
+                    Title = g.Title,
+                    Publisher = g.Publisher,
+                    ReleaseDate = g.ReleaseDate,
+                    Notes = g.Notes,
+                    Entry = g.Entry,
+                    Exit = g.Exit,
+                };
+
+            return games.First();
         }
 
         public List<GameIndex> GetGamesByPlayer(int playerId)
         {
-            throw new NotImplementedException();
+            var games = from g in _dal.Games
+                join hs in _dal.HighScores on g.GameId equals hs.GameId
+                where hs.PlayerId == playerId
+                select new GameIndex
+                {
+                    GameId = g.GameId,
+                    ReleaseDate = g.ReleaseDate,
+                    Title = g.Title,
+                };
+            
+            return games.ToList();
         }
 
         public bool Add(GameDetail gameDetail)
