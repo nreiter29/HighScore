@@ -16,9 +16,9 @@
 
         public void Rollback()
         {
-            _players = null;
-            _games = null;
-            _highScores = null;
+            _players = new List<Player>();
+            _games = new List<Game>();
+            _highScores = new List<HighScore>();
         }
 
         protected abstract List<Game> LoadGames();

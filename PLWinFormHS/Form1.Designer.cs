@@ -315,6 +315,7 @@
             rollbackButton.TabIndex = 14;
             rollbackButton.Text = "Rollback";
             rollbackButton.UseVisualStyleBackColor = true;
+            rollbackButton.Click += rollbackButton_Click;
             // 
             // Form1
             // 

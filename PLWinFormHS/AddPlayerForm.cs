@@ -23,6 +23,8 @@ namespace PLWinFormHS
                 Entry = DateTime.Now,
                 Pw = passwordInput.Text,
             });
+
+            this.Close();
         }
     }
 }

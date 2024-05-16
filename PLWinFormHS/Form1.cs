@@ -24,6 +24,9 @@ namespace PLWinFormHS
             playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged;
             playerIndexBindingSource.DataSource = unitOfWork.Players.GetPlayers();
             playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged;
+
+            var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
+            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(currentPlayer.PlayerId);
         }
 
         private void ReloadGames()
@@ -31,6 +34,32 @@ namespace PLWinFormHS
             gameIndexBindingSource.CurrentChanged -= highScoreGameIndexBindingSource_CurrentChanged;
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
             gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged;
+
+            var currentGame = (GameIndex)gameIndexBindingSource.Current;
+            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(currentGame.GameId);
+
+        }
+
+        private void ReloadAll(bool gotDataDeleted = false)
+        {
+            playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged;
+            playerIndexBindingSource.DataSource = unitOfWork.Players.GetPlayers();
+            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged;
+
+            gameIndexBindingSource.CurrentChanged -= highScoreGameIndexBindingSource_CurrentChanged;
+            gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
+            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged;
+
+            if (gotDataDeleted)
+            {
+                highScoreIndexBindingSource.DataSource = new List<HighScorePlayerIndex>();
+                highScoreGameIndexBindingSource.DataSource = new List<HighScoreGameIndex>();
+            }
+            else
+            {
+                highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
+                highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(unitOfWork.Games.GetGames()[0].GameId);
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -52,14 +81,20 @@ namespace PLWinFormHS
 
         private void rollbackButton_Click(object sender, EventArgs e)
         {
-            unitOfWork.Rollback();
+            var sureResult = MessageBox.Show($"Are u sure u wan't do rollback (all Data will be deleted)?");
+            if (sureResult == DialogResult.OK)
+            {
+                unitOfWork.Rollback();
+                ReloadAll(true);
+            }
         }
 
         public delegate void AddPlayerDelegate(PlayerAdd playerAdd);
 
         private void AddPlayer(PlayerAdd player)
         {
-            unitOfWork.Players.Add(player);
+            if (unitOfWork.Players.Add(player))
+                MessageBox.Show($"Added Successfully {player.FName} {player.LName}");
         }
 
         private void addPlayerButton_Click(object sender, EventArgs e)
@@ -86,7 +121,8 @@ namespace PLWinFormHS
 
         private void AddGame(GameDetail gameDetail)
         {
-            unitOfWork.Games.Add(gameDetail);
+            if (unitOfWork.Games.Add(gameDetail))
+                MessageBox.Show($"Added Successfully {gameDetail.Title}");
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -94,9 +130,6 @@ namespace PLWinFormHS
             AddGameForm addGameForm = new AddGameForm();
             addGameForm.AddGame = new AddGameDelegate(this.AddGame);
             addGameForm.ShowDialog();
-
-            if(addGameForm.Added)
-                addGameForm.Close();
 
             ReloadGames();
         }

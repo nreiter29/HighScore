@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using DTOsHS;
+﻿using DTOsHS;
 
 namespace PLWinFormHS
 {
@@ -11,7 +10,6 @@ namespace PLWinFormHS
         }
 
         public Form1.AddGameDelegate AddGame = delegate { };
-        public bool Added = false;
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
@@ -23,7 +21,7 @@ namespace PLWinFormHS
                 Notes = notesInput.Text,
             });
 
-            Added = true;
+            this.Close();
         }
-}
+    }
 }
