@@ -15,15 +15,15 @@ namespace PLWinFormHS
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
             highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
             highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(unitOfWork.Games.GetGames()[0].GameId);
-            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged;
-            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged;
+            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged!;
+            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
         }
 
         private void ReloadPlayers()
         {
-            playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged;
+            playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged!;
             playerIndexBindingSource.DataSource = unitOfWork.Players.GetPlayers();
-            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged;
+            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged!;
 
             var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
             highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(currentPlayer.PlayerId);
@@ -31,9 +31,9 @@ namespace PLWinFormHS
 
         private void ReloadGames()
         {
-            gameIndexBindingSource.CurrentChanged -= highScoreGameIndexBindingSource_CurrentChanged;
+            gameIndexBindingSource.CurrentChanged -= highScoreGameIndexBindingSource_CurrentChanged!;
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
-            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged;
+            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
 
             var currentGame = (GameIndex)gameIndexBindingSource.Current;
             highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(currentGame.GameId);
@@ -42,13 +42,13 @@ namespace PLWinFormHS
 
         private void ReloadAll(bool gotDataDeleted = false)
         {
-            playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged;
+            playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged!;
             playerIndexBindingSource.DataSource = unitOfWork.Players.GetPlayers();
-            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged;
+            playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged!;
 
-            gameIndexBindingSource.CurrentChanged -= highScoreGameIndexBindingSource_CurrentChanged;
+            gameIndexBindingSource.CurrentChanged -= highScoreGameIndexBindingSource_CurrentChanged!;
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
-            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged;
+            gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
 
             if (gotDataDeleted)
             {
@@ -81,7 +81,7 @@ namespace PLWinFormHS
 
         private void rollbackButton_Click(object sender, EventArgs e)
         {
-            var sureResult = MessageBox.Show($"Are u sure u wan't do rollback (all Data will be deleted)?");
+            var sureResult = MessageBox.Show($@"Are u sure u want do rollback (all Data will be deleted)?");
             if (sureResult == DialogResult.OK)
             {
                 unitOfWork.Rollback();
@@ -94,7 +94,7 @@ namespace PLWinFormHS
         private void AddPlayer(PlayerAdd player)
         {
             if (unitOfWork.Players.Add(player))
-                MessageBox.Show($"Added Successfully {player.FName} {player.LName}");
+                MessageBox.Show($@"Added Successfully {player.FName} {player.LName}");
         }
 
         private void addPlayerButton_Click(object sender, EventArgs e)
@@ -109,7 +109,7 @@ namespace PLWinFormHS
         private void deletePlayerButton_Click(object sender, EventArgs e)
         {
             var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
-            var sureResult = MessageBox.Show($"Are u sure u wan't do delete {currentPlayer.FullName}?");
+            var sureResult = MessageBox.Show($@"Are u sure u want do delete {currentPlayer.FullName}?");
 
             if (sureResult == DialogResult.OK)
                 unitOfWork.Players.Delete(currentPlayer.PlayerId);
@@ -122,7 +122,7 @@ namespace PLWinFormHS
         private void AddGame(GameDetail gameDetail)
         {
             if (unitOfWork.Games.Add(gameDetail))
-                MessageBox.Show($"Added Successfully {gameDetail.Title}");
+                MessageBox.Show($@"Added Successfully {gameDetail.Title}");
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -137,7 +137,7 @@ namespace PLWinFormHS
         private void deleteGameButton_Click(object sender, EventArgs e)
         {
             var currentGame = (GameIndex)gameIndexBindingSource.Current;
-            var sureResult = MessageBox.Show($"Are u sure u wan't do delete {currentGame.Title}?");
+            var sureResult = MessageBox.Show($@"Are u sure u want do delete {currentGame.Title}?");
 
             if (sureResult == DialogResult.OK)
                 unitOfWork.Games.Delete(currentGame.GameId);
