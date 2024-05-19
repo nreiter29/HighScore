@@ -269,6 +269,7 @@
             button3.TabIndex = 9;
             button3.Text = "Add";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button4
             // 
@@ -278,6 +279,7 @@
             button4.TabIndex = 10;
             button4.Text = "Remove";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // button5
             // 
@@ -287,6 +289,7 @@
             button5.TabIndex = 12;
             button5.Text = "Remove";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // button6
             // 
@@ -296,6 +299,7 @@
             button6.TabIndex = 11;
             button6.Text = "Add";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // saveButton
             // 

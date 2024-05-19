@@ -1,5 +1,6 @@
 using BLHS;
 using DTOsHS;
+using ModelsHS;
 
 namespace PLWinFormHS
 {
@@ -40,7 +41,7 @@ namespace PLWinFormHS
 
         }
 
-        private void ReloadAll(bool gotDataDeleted = false)
+        private void ReloadAll()
         {
             playerIndexBindingSource.CurrentChanged -= playerIndexBindingSource_CurrentChanged!;
             playerIndexBindingSource.DataSource = unitOfWork.Players.GetPlayers();
@@ -50,16 +51,8 @@ namespace PLWinFormHS
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
             gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
 
-            if (gotDataDeleted)
-            {
-                highScoreIndexBindingSource.DataSource = new List<HighScorePlayerIndex>();
-                highScoreGameIndexBindingSource.DataSource = new List<HighScoreGameIndex>();
-            }
-            else
-            {
-                highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
-                highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(unitOfWork.Games.GetGames()[0].GameId);
-            }
+            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
+            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(unitOfWork.Games.GetGames()[0].GameId);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -81,11 +74,12 @@ namespace PLWinFormHS
 
         private void rollbackButton_Click(object sender, EventArgs e)
         {
-            var sureResult = MessageBox.Show($@"Are u sure u want do rollback (all Data will be deleted)?");
+            var sureResult = MessageBox.Show($@"Are u sure u want do rollback?");
+
             if (sureResult == DialogResult.OK)
             {
                 unitOfWork.Rollback();
-                ReloadAll(true);
+                ReloadAll();
             }
         }
 
@@ -111,7 +105,7 @@ namespace PLWinFormHS
             var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
             var sureResult = MessageBox.Show($@"Are u sure u want do delete {currentPlayer.FullName}?");
 
-                    if (sureResult == DialogResult.OK)
+            if (sureResult == DialogResult.OK)
                 unitOfWork.Players.Delete(currentPlayer.PlayerId);
 
             ReloadPlayers();
@@ -143,6 +137,54 @@ namespace PLWinFormHS
                 unitOfWork.Games.Delete(currentGame.GameId);
 
             ReloadGames();
+        }
+
+        public delegate void AddHighScoreDelegate(HighScore highScore);
+
+        private void AddHighScore(HighScore highScore)
+        {
+            if (unitOfWork.HIghScores.Add(highScore))
+                MessageBox.Show($@"Added Successfully new HighScore");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            AddHighScoreForm addHighScoreForm = new AddHighScoreForm(unitOfWork.Games.GetGames(), unitOfWork.Players.GetPlayers());
+            addHighScoreForm.AddHighScore = new AddHighScoreDelegate(this.AddHighScore);
+            addHighScoreForm.ShowDialog();
+
+            ReloadAll();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var currentHighScore = (HighScorePlayerIndex)highScoreIndexBindingSource.Current;
+
+            var sureResult = MessageBox.Show($@"Are u sure u want do delete HighScore {currentHighScore.Score} from {currentHighScore.Created}?");
+            if (sureResult == DialogResult.OK)
+                unitOfWork.HIghScores.Delete(currentHighScore.GameId, currentHighScore.PlayerId);
+
+            ReloadAll();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            AddHighScoreForm addHighScoreForm = new AddHighScoreForm(unitOfWork.Games.GetGames(), unitOfWork.Players.GetPlayers());
+            addHighScoreForm.AddHighScore = new AddHighScoreDelegate(this.AddHighScore);
+            addHighScoreForm.ShowDialog();
+
+            ReloadAll();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var currentHighScore = (HighScorePlayerIndex)highScoreIndexBindingSource.Current;
+
+            var sureResult = MessageBox.Show($@"Are u sure u want do delete HighScore {currentHighScore.Score} from {currentHighScore.Created}?");
+            if (sureResult == DialogResult.OK)
+                unitOfWork.HIghScores.Delete(currentHighScore.GameId, currentHighScore.PlayerId);
+
+            ReloadAll();
         }
     }
 }

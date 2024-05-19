@@ -50,6 +50,7 @@ namespace BLHS.Repos
                     PlayerId = h.PlayerId,
                     Score = h.Score,
                     Created = h.Created,
+                    GameId = h.GameId,
                 };
             return highscores.ToList();
         }
