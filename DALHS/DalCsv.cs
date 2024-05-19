@@ -52,7 +52,7 @@
                     foreach (var highScore in _highScores)
                     {
                         file.WriteLine(
-                            $"{highScore.PlayerId};{highScore.GameId};{highScore.Score};{highScore.Created}");
+                            $"{highScore.PlayerId};{highScore.GameId};{highScore.Score};{highScore.Created};{highScore.Publisher}");
                     }
 
                     count += _highScores.Count;
@@ -144,7 +144,8 @@
                         PlayerId = int.Parse(parts[0]),
                         GameId = int.Parse(parts[1]),
                         Score = int.Parse(parts[2]),
-                        Created = DateTime.Parse(parts[3])
+                        Created = DateTime.Parse(parts[3]),
+                        Publisher = Convert.ToString(parts[4]),
                     });
                 }
             }

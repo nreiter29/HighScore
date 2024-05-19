@@ -111,7 +111,7 @@ namespace PLWinFormHS
             var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
             var sureResult = MessageBox.Show($@"Are u sure u want do delete {currentPlayer.FullName}?");
 
-            if (sureResult == DialogResult.OK)
+                    if (sureResult == DialogResult.OK)
                 unitOfWork.Players.Delete(currentPlayer.PlayerId);
 
             ReloadPlayers();

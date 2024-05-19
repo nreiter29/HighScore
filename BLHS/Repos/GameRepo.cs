@@ -67,6 +67,7 @@ namespace BLHS.Repos
                     GameId = g.GameId,
                     ReleaseDate = g.ReleaseDate,
                     Title = g.Title,
+                    Publisher = g.Publisher,
                 };
 
             return games.ToList();

@@ -20,7 +20,9 @@ namespace BLHS.Repos
                 {
                     PlayerId = h.PlayerId,
                     Score = h.Score,
-                    Created = h.Created
+                    Created = h.Created,
+                    GameId = h.GameId,
+                    Publisher = h.Publisher,
                 };
             return highscores.ToList();
         }
@@ -34,6 +36,7 @@ namespace BLHS.Repos
                     Score = h.Score,
                     Created = h.Created,
                     GameId = h.GameId,
+                    Publisher = h.Publisher,
                 };
             return highscores.ToList();
         }
@@ -58,7 +61,8 @@ namespace BLHS.Repos
                 PlayerId = highscore.PlayerId,
                 GameId = highscore.GameId,
                 Score = highscore.Score,
-                Created = DateTime.Now
+                Created = DateTime.Now,
+                Publisher = highscore.Publisher,
             };
             _dal.HighScores.Add(newHighscore);
             return true;
