@@ -39,7 +39,7 @@ namespace XUnitHS
                 new HighScore { PlayerId = 2, GameId = 1, Score = 200, Created = DateTime.Now },
             });
 
-            var result = highScoreRepo.GetHighscores();
+            var result = highScoreRepo.GetHighScores();
 
             Assert.Equal(2, result.Count);
         }
@@ -53,7 +53,7 @@ namespace XUnitHS
                 new HighScore { PlayerId = 2, GameId = 2, Score = 200, Created = DateTime.Now },
             });
 
-            var result = highScoreRepo.GetHighscoresByGame(1);
+            var result = highScoreRepo.GetHighScoresByGame(1);
 
             Assert.Single(result);
         }
@@ -67,7 +67,7 @@ namespace XUnitHS
                 new HighScore { PlayerId = 1, GameId = 2, Score = 200, Created = DateTime.Now },
             });
 
-            var result = highScoreRepo.GetHighscoresByPlayer(1);
+            var result = highScoreRepo.GetHighScoresByPlayer(1);
 
             Assert.Equal(2, result.Count);
         }

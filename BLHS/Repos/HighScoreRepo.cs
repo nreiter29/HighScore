@@ -13,9 +13,9 @@ namespace BLHS.Repos
             _dal = dal;
         }
 
-        public List<HighScoreIndex> GetHighscores()
+        public List<HighScoreIndex> GetHighScores()
         {
-            var highscores = from h in _dal.HighScores
+            var highScores = from h in _dal.HighScores
                 select new HighScoreIndex
                 {
                     PlayerId = h.PlayerId,
@@ -24,12 +24,12 @@ namespace BLHS.Repos
                     GameId = h.GameId,
                     Publisher = h.Publisher,
                 };
-            return highscores.ToList();
+            return highScores.ToList();
         }
 
-        public List<HighScoreGameIndex> GetHighscoresByGame(int gameId)
+        public List<HighScoreGameIndex> GetHighScoresByGame(int gameId)
         {
-            var highscores = from h in _dal.HighScores
+            var highScores = from h in _dal.HighScores
                 where h.GameId == gameId
                 select new HighScoreGameIndex
                 {
@@ -38,12 +38,12 @@ namespace BLHS.Repos
                     GameId = h.GameId,
                     Publisher = h.Publisher,
                 };
-            return highscores.ToList();
+            return highScores.ToList();
         }
 
-        public List<HighScorePlayerIndex> GetHighscoresByPlayer(int playerId)
+        public List<HighScorePlayerIndex> GetHighScoresByPlayer(int playerId)
         {
-            var highscores = from h in _dal.HighScores
+            var highScores = from h in _dal.HighScores
                 where h.PlayerId == playerId
                 select new HighScorePlayerIndex()
                 {
@@ -52,49 +52,52 @@ namespace BLHS.Repos
                     Created = h.Created,
                     GameId = h.GameId,
                 };
-            return highscores.ToList();
+            return highScores.ToList();
         }
 
-        public bool Add(HighScore highscore)
+        public bool Add(HighScore highScore)
         {
-            HighScore newHighscore = new HighScore
+            HighScore newHighScore = new HighScore
             {
-                PlayerId = highscore.PlayerId,
-                GameId = highscore.GameId,
-                Score = highscore.Score,
+                PlayerId = highScore.PlayerId,
+                GameId = highScore.GameId,
+                Score = highScore.Score,
                 Created = DateTime.Now,
-                Publisher = highscore.Publisher,
+                Publisher = highScore.Publisher,
             };
-            _dal.HighScores.Add(newHighscore);
+            _dal.HighScores.Add(newHighScore);
             return true;
         }
 
-        public bool Update(HighScore highscore)
+        public bool Update(HighScore highScore)
         {
-            var highscoreToUpdate =
-                _dal.HighScores.Find(h => h.GameId == highscore.GameId && h.PlayerId == highscore.PlayerId);
+            var highScoreToUpdate =
+                _dal.HighScores.Find(h => h.GameId == highScore.GameId && h.PlayerId == highScore.PlayerId);
 
-            if (highscoreToUpdate is null)
+            if (highScoreToUpdate is null)
                 return false;
 
-            highscoreToUpdate.Score = highscore.Score;
-            highscoreToUpdate.Created = highscore.Created;
+            highScoreToUpdate.Score = highScore.Score;
+            highScoreToUpdate.Created = highScore.Created;
+            highScoreToUpdate.PlayerId = highScore.PlayerId;
+            highScoreToUpdate.GameId = highScore.GameId;
+            highScoreToUpdate.Publisher = highScore.Publisher;
             return true;
         }
 
         public bool Delete(int gameId, int playerId)
         {
-            var highscoreToDelete = _dal.HighScores.Find(h => h.GameId == gameId && h.PlayerId == playerId);
-            if (highscoreToDelete is null)
+            var highScoreToDelete = _dal.HighScores.Find(h => h.GameId == gameId && h.PlayerId == playerId);
+            if (highScoreToDelete is null)
                 return false;
 
-            _dal.HighScores.Remove(highscoreToDelete);
+            _dal.HighScores.Remove(highScoreToDelete);
             return true;
         }
 
-        public bool Delete(HighScore highscore)
+        public bool Delete(HighScore highScore)
         {
-            return _dal.HighScores.Remove(highscore);
+            return _dal.HighScores.Remove(highScore);
         }
     }
 }

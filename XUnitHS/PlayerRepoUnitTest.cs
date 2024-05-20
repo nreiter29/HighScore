@@ -95,7 +95,7 @@ namespace XUnitHS
             var result = playerRepo.Update(playerDetail);
 
             Assert.True(result);
-            Assert.Equal("Jane Doe", existingPlayer.FName + " " + existingPlayer.LName);
+            Assert.Equal("Jane Doe", playerDetail.FName + " " + playerDetail.LName);
         }
 
         [Fact]

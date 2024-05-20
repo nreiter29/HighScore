@@ -20,13 +20,13 @@ namespace BLHS.Repos
         public List<PlayerIndex> GetPlayers()
         {
             var players = from p in _dal.Players
-                where p.Exit == null || p.Exit > DateTime.Now
-                select new PlayerIndex()
-                {
-                    PlayerId = p.PlayerId,
-                    FullName = p.FName + " " + p.LName,
-                    BirthDay = p.BirthDay,
-                };
+                          where p.Exit == null || p.Exit > DateTime.Now
+                          select new PlayerIndex()
+                          {
+                              PlayerId = p.PlayerId,
+                              FullName = p.FName + " " + p.LName,
+                              BirthDay = p.BirthDay,
+                          };
             return players.ToList();
         }
 
@@ -37,12 +37,12 @@ namespace BLHS.Repos
         public List<SelectItem> GetPlayerSelect()
         {
             var players = from p in _dal.Players
-                where p.Exit == null || p.Exit > DateTime.Now
-                select new SelectItem()
-                {
-                    ValueMember = p.PlayerId,
-                    DisplayMember = p.FName + " " + p.LName,
-                };
+                          where p.Exit == null || p.Exit > DateTime.Now
+                          select new SelectItem()
+                          {
+                              ValueMember = p.PlayerId,
+                              DisplayMember = p.FName + " " + p.LName,
+                          };
             return players.ToList();
         }
 
@@ -80,14 +80,14 @@ namespace BLHS.Repos
         public List<PlayerIndex> GetPlayersByGame(int gameId)
         {
             var players = from p in _dal.Players
-                join h in _dal.HighScores on p.PlayerId equals h.PlayerId
-                where h.GameId == gameId && p.Exit == null || p.Exit > DateTime.Now
-                select new PlayerIndex()
-                {
-                    PlayerId = p.PlayerId,
-                    FullName = p.FName + " " + p.LName,
-                    BirthDay = p.BirthDay,
-                };
+                          join h in _dal.HighScores on p.PlayerId equals h.PlayerId
+                          where h.GameId == gameId && p.Exit == null || p.Exit > DateTime.Now
+                          select new PlayerIndex()
+                          {
+                              PlayerId = p.PlayerId,
+                              FullName = p.FName + " " + p.LName,
+                              BirthDay = p.BirthDay,
+                          };
             return players.ToList();
         }
 
@@ -120,18 +120,26 @@ namespace BLHS.Repos
         /// <returns></returns>
         public bool Update(PlayerDetail player)
         {
-            var playerToUpdate = _dal.Players.Find(p => p.PlayerId == player.PlayerId);
-            if (playerToUpdate is null)
+            try
+            {
+                    var playerIndex = _dal.Players.FindIndex(p => p.PlayerId == player.PlayerId);
+
+                _dal.Players[playerIndex] = new Player
+                {
+                    PlayerId = player.PlayerId,
+                    FName = player.FName,
+                    LName = player.LName,
+                    BirthDay = player.BirthDay,
+                    Entry = player.Entry,
+                    Exit = player.Exit,
+                    Notes = player.Notes,
+                };
+            }
+            catch
             {
                 return false;
             }
 
-            playerToUpdate.FName = player.FName;
-            playerToUpdate.LName = player.LName;
-            playerToUpdate.BirthDay = player.BirthDay;
-            playerToUpdate.Entry = player.Entry;
-            playerToUpdate.Exit = player.Exit;
-            playerToUpdate.Notes = player.Notes;
             return true;
         }
 

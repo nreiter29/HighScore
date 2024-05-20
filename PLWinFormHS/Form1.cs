@@ -14,8 +14,8 @@ namespace PLWinFormHS
 
             playerIndexBindingSource.DataSource = unitOfWork.Players.GetPlayers();
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
-            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
-            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(unitOfWork.Games.GetGames()[0].GameId);
+            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
+            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByGame(unitOfWork.Games.GetGames()[0].GameId);
             playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged!;
             gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
         }
@@ -27,7 +27,7 @@ namespace PLWinFormHS
             playerIndexBindingSource.CurrentChanged += playerIndexBindingSource_CurrentChanged!;
 
             var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
-            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(currentPlayer.PlayerId);
+            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByPlayer(currentPlayer.PlayerId);
         }
 
         private void ReloadGames()
@@ -37,7 +37,7 @@ namespace PLWinFormHS
             gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
 
             var currentGame = (GameIndex)gameIndexBindingSource.Current;
-            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(currentGame.GameId);
+            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByGame(currentGame.GameId);
 
         }
 
@@ -51,8 +51,8 @@ namespace PLWinFormHS
             gameIndexBindingSource.DataSource = unitOfWork.Games.GetGames();
             gameIndexBindingSource.CurrentChanged += highScoreGameIndexBindingSource_CurrentChanged!;
 
-            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
-            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(unitOfWork.Games.GetGames()[0].GameId);
+            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByPlayer(unitOfWork.Players.GetPlayers()[0].PlayerId);
+            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByGame(unitOfWork.Games.GetGames()[0].GameId);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -63,13 +63,13 @@ namespace PLWinFormHS
         private void playerIndexBindingSource_CurrentChanged(object sender, EventArgs e)
         {
             var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
-            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByPlayer(currentPlayer.PlayerId);
+            highScoreIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByPlayer(currentPlayer.PlayerId);
         }
 
         private void highScoreGameIndexBindingSource_CurrentChanged(object sender, EventArgs e)
         {
             var currentGame = (GameIndex)gameIndexBindingSource.Current;
-            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighscoresByGame(currentGame.GameId);
+            highScoreGameIndexBindingSource.DataSource = unitOfWork.HIghScores.GetHighScoresByGame(currentGame.GameId);
         }
 
         private void rollbackButton_Click(object sender, EventArgs e)
@@ -183,6 +183,74 @@ namespace PLWinFormHS
             var sureResult = MessageBox.Show($@"Are u sure u want do delete HighScore {currentHighScore.Score} from {currentHighScore.Created}?");
             if (sureResult == DialogResult.OK)
                 unitOfWork.HIghScores.Delete(currentHighScore.GameId, currentHighScore.PlayerId);
+
+            ReloadAll();
+        }
+
+        public delegate void UpdatePlayerDelegate(PlayerDetail playerDetail);
+
+        private void UpdatePlayer(PlayerDetail playerDetail)
+        {
+            if (unitOfWork.Players.Update(playerDetail))
+                MessageBox.Show($@"Updated Successfully {playerDetail.FName} {playerDetail.LName}");
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
+
+            UpdatePlayerForm updateForm = new UpdatePlayerForm(unitOfWork.Players.GetPlayer(currentPlayer.PlayerId));
+            updateForm.UpdatePlayer = new UpdatePlayerDelegate(this.UpdatePlayer);
+            updateForm.ShowDialog();
+
+            ReloadPlayers();
+        }
+
+        public delegate void UpdateGameDelegate(GameDetail gameDetail);
+
+        private void UpdateGame(GameDetail gameDetail)
+        {
+            if (unitOfWork.Games.Update(gameDetail))
+                MessageBox.Show($@"Updated Successfully {gameDetail.Title}");
+        }
+
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentGame = (GameIndex)gameIndexBindingSource.Current;
+
+            UpdateGameForm updateForm = new UpdateGameForm(unitOfWork.Games.GetGame(currentGame.GameId));
+            updateForm.UpdateGame = new UpdateGameDelegate(this.UpdateGame);
+            updateForm.ShowDialog();
+
+            ReloadGames();
+        }
+
+        public delegate void UpdateHighScoreDelegate(HighScore highScore);
+
+        private void UpdateHighScore(HighScore highScore)
+        {
+            if (unitOfWork.HIghScores.Update(highScore))
+                MessageBox.Show($@"Updated Successfully HighScore");
+        }
+
+        private void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentHighScore = (HighScorePlayerIndex)highScoreIndexBindingSource.Current;
+
+            UpdateHighScoreForm updateForm = new UpdateHighScoreForm(unitOfWork.Games.GetGames(), unitOfWork.Players.GetPlayers(), currentHighScore, null);
+            updateForm.UpdateHighScore = new UpdateHighScoreDelegate(this.UpdateHighScore);
+            updateForm.ShowDialog();
+
+            ReloadAll();
+        }
+
+        private void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentHighScore = (HighScoreGameIndex)highScoreGameIndexBindingSource.Current;
+
+            UpdateHighScoreForm updateForm = new UpdateHighScoreForm(unitOfWork.Games.GetGames(), unitOfWork.Players.GetPlayers(), null, currentHighScore);
+            updateForm.UpdateHighScore = new UpdateHighScoreDelegate(this.UpdateHighScore);
+            updateForm.ShowDialog();
 
             ReloadAll();
         }

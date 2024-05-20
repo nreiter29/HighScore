@@ -22,6 +22,8 @@ namespace BLHS.Repos
                     GameId = g.GameId,
                     ReleaseDate = g.ReleaseDate,
                     Title = g.Title,
+                    Notes = g.Notes,
+                    Publisher = g.Publisher,
                 };
             return games.ToList();
         }
@@ -68,6 +70,7 @@ namespace BLHS.Repos
                     ReleaseDate = g.ReleaseDate,
                     Title = g.Title,
                     Publisher = g.Publisher,
+                    Notes = g.Notes,
                 };
 
             return games.ToList();
@@ -104,6 +107,7 @@ namespace BLHS.Repos
 
             gameToUpdate.Title = gameDetail.Title;
             gameToUpdate.ReleaseDate = gameDetail.ReleaseDate;
+            gameToUpdate.Publisher = gameDetail.Publisher;
             gameToUpdate.Exit = gameDetail.Exit;
             gameToUpdate.Notes = gameDetail.Notes;
 
