@@ -12,7 +12,7 @@ namespace PLWinFormHS
 
         public Form1.UpdateHighScoreDelegate UpdateHighScore = delegate { };
 
-        public UpdateHighScoreForm(List<GameIndex> gameIndexDataSource, List<PlayerIndex> playerIndexDataSource, HighScorePlayerIndex? highScorePlayerIndex, HighScoreGameIndex? highScoreGameIndex)
+        public UpdateHighScoreForm(List<GameIndex> gameIndexDataSource, List<PlayerIndex> playerIndexDataSource, HighScorePlayerIndex? highScorePlayerIndex, HighScoreGameIndex? highScoreGameIndex, bool isUpdateForm = false)
         {
             InitializeComponent();
 
@@ -29,6 +29,30 @@ namespace PLWinFormHS
 
             if (highScoreGameIndex != null)
                 scoreInput.Value = highScoreGameIndex.Score;
+
+            if (isUpdateForm)
+            {
+                updateHighScoreButton.Visible = false;
+                playerComboBox.Visible = false;
+                gameComboBox.Visible = false;
+
+                if (highScoreGameIndex is not null)
+                {
+                    playerLabel.Text = highScoreGameIndex.FullName;
+                    gameLabel.Text = gameIndexDataSource
+                        .Find(game => game.GameId == highScoreGameIndex.GameId)
+                        ?.Title;
+                }
+
+                if (highScorePlayerIndex is not null)
+                {
+                    playerLabel.Text = playerIndexDataSource
+                        .Find(player => player.PlayerId == highScorePlayerIndex.PlayerId)
+                        ?.FullName;
+                    gameLabel.Text = gameIndexDataSource
+                        .Find(game => game.GameId == highScorePlayerIndex.GameId)?.Title;
+                }
+            }
         }
 
         private void updateHighScoreButton_Click(object sender, EventArgs e)
@@ -44,6 +68,7 @@ namespace PLWinFormHS
                     Score = Decimal.ToInt32(scoreInput.Value),
                     Publisher = game.Publisher,
                     Created = highScorePlayerIndex.Created,
+                    FullName = player!.FullName,
                 });
 
             if (highScoreGameIndex != null)
@@ -54,6 +79,7 @@ namespace PLWinFormHS
                     Score = Decimal.ToInt32(scoreInput.Value),
                     Publisher = game.Publisher,
                     Created = highScoreGameIndex.Created,
+                    FullName = player!.FullName,
                 });
 
             this.Close();

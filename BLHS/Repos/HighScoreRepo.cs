@@ -37,6 +37,7 @@ namespace BLHS.Repos
                     Created = h.Created,
                     GameId = h.GameId,
                     Publisher = h.Publisher,
+                    FullName = h.FullName,
                 };
             return highScores.ToList();
         }
@@ -64,6 +65,7 @@ namespace BLHS.Repos
                 Score = highScore.Score,
                 Created = DateTime.Now,
                 Publisher = highScore.Publisher,
+                FullName = highScore.FullName,
             };
             _dal.HighScores.Add(newHighScore);
             return true;
@@ -82,6 +84,7 @@ namespace BLHS.Repos
             highScoreToUpdate.PlayerId = highScore.PlayerId;
             highScoreToUpdate.GameId = highScore.GameId;
             highScoreToUpdate.Publisher = highScore.Publisher;
+            highScoreToUpdate.FullName = highScore.FullName;
             return true;
         }
 

@@ -1,0 +1,162 @@
+[
+    {
+        "GameId": 1,
+        "PlayerId": 1,
+        "Score": 100,
+        "Created": "2022-01-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 1 LastName 1"
+    },
+    {
+        "GameId": 2,
+        "PlayerId": 2,
+        "Score": 200,
+        "Created": "2024-02-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 2 LastName 2"
+    },
+    {
+        "GameId": 3,
+        "PlayerId": 3,
+        "Score": 300,
+        "Created": "2022-03-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 3 LastName 3"
+    },
+    {
+        "GameId": 4,
+        "PlayerId": 4,
+        "Score": 400,
+        "Created": "2022-04-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 4 LastName 4"
+    },
+    {
+        "GameId": 5,
+        "PlayerId": 5,
+        "Score": 500,
+        "Created": "2022-05-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 5 LastName 5"
+    },
+    {
+        "GameId": 6,
+        "PlayerId": 6,
+        "Score": 600,
+        "Created": "2022-06-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 6 LastName 6"
+    },
+    {
+        "GameId": 7,
+        "PlayerId": 7,
+        "Score": 700,
+        "Created": "2022-07-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 7 LastName 7"
+    },
+    {
+        "GameId": 8,
+        "PlayerId": 8,
+        "Score": 800,
+        "Created": "2022-08-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 8 LastName 8"
+    },
+    {
+        "GameId": 9,
+        "PlayerId": 9,
+        "Score": 900,
+        "Created": "2022-09-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 9 LastName 9"
+    },
+    {
+        "GameId": 10,
+        "PlayerId": 10,
+        "Score": 1000,
+        "Created": "2022-10-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 10 LastName 10"
+    },
+    {
+        "GameId": 11,
+        "PlayerId": 11,
+        "Score": 1100,
+        "Created": "2022-11-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 11 LastName 11"
+    },
+    {
+        "GameId": 12,
+        "PlayerId": 12,
+        "Score": 1200,
+        "Created": "2022-12-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 12 LastName 12"
+    },
+    {
+        "GameId": 13,
+        "PlayerId": 13,
+        "Score": 1300,
+        "Created": "2023-01-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 13 LastName 13"
+    },
+    {
+        "GameId": 14,
+        "PlayerId": 14,
+        "Score": 1400,
+        "Created": "2023-02-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 14 LastName 14"
+    },
+    {
+        "GameId": 15,
+        "PlayerId": 15,
+        "Score": 1500,
+        "Created": "2023-03-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 15 LastName 15"
+    },
+    {
+        "GameId": 16,
+        "PlayerId": 16,
+        "Score": 1600,
+        "Created": "2023-04-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 16 LastName 16"
+    },
+    {
+        "GameId": 17,
+        "PlayerId": 17,
+        "Score": 1700,
+        "Created": "2023-05-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 17 LastName 17"
+    },
+    {
+        "GameId": 18,
+        "PlayerId": 18,
+        "Score": 1800,
+        "Created": "2023-06-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 18 LastName 18"
+    },
+    {
+        "GameId": 19,
+        "PlayerId": 19,
+        "Score": 1900,
+        "Created": "2023-07-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 19 LastName 19"
+    },
+    {
+        "GameId": 20,
+        "PlayerId": 20,
+        "Score": 2000,
+        "Created": "2022-12-01T00:00:00",
+        "Publisher": "",
+        "FullName": "FirstName 20 LastName 20"
+    }
+]

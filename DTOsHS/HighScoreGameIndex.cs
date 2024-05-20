@@ -6,5 +6,6 @@ namespace DTOsHS
         public string Publisher { get; set; } = string.Empty;
         public int Score { get; set; }
         public DateTime Created { get; set; }
+        public string FullName { get; set; } = string.Empty;
     }
 }

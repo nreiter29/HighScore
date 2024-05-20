@@ -7,7 +7,7 @@ namespace PLWinFormHS
         private int playerId;
         public Form1.UpdatePlayerDelegate UpdatePlayer = delegate { };
 
-        public UpdatePlayerForm(PlayerDetail playerDetail)
+        public UpdatePlayerForm(PlayerDetail playerDetail,bool isDetailForm = false)
         {
             InitializeComponent();
 
@@ -16,6 +16,9 @@ namespace PLWinFormHS
             birthDayInput.Value = playerDetail.BirthDay.ToDateTime(TimeOnly.MaxValue);
             notesInput.Text = playerDetail.Notes;
             playerId = playerDetail.PlayerId;
+
+            if(isDetailForm)
+                addPlayerButton.Visible = false;
         }
 
         private void addPlayerButton_Click(object sender, EventArgs e)

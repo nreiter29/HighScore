@@ -254,5 +254,37 @@ namespace PLWinFormHS
 
             ReloadAll();
         }
+
+        private void playerDetailButton_Click(object sender, EventArgs e)
+        {
+            var currentPlayer = (PlayerIndex)playerIndexBindingSource.Current;
+
+            UpdatePlayerForm updateForm = new UpdatePlayerForm(unitOfWork.Players.GetPlayer(currentPlayer.PlayerId), true);
+            updateForm.ShowDialog();
+        }
+
+        private void gameDetailButton_Click(object sender, EventArgs e)
+        {
+            var currentGame = (GameIndex)gameIndexBindingSource.Current;
+
+            UpdateGameForm updateForm = new UpdateGameForm(unitOfWork.Games.GetGame(currentGame.GameId));
+            updateForm.ShowDialog();
+        }
+
+        private void highScoreDetailButton_Click(object sender, EventArgs e)
+        {
+            var currentHighScore = (HighScorePlayerIndex)highScoreIndexBindingSource.Current;
+
+            UpdateHighScoreForm updateForm = new UpdateHighScoreForm(unitOfWork.Games.GetGames(), unitOfWork.Players.GetPlayers(), currentHighScore, null, true);
+            updateForm.ShowDialog();
+        }
+
+        private void highScoreGameDetailButton_Click(object sender, EventArgs e)
+        {
+            var currentHighScore = (HighScoreGameIndex)highScoreGameIndexBindingSource.Current;
+
+            UpdateHighScoreForm updateForm = new UpdateHighScoreForm(unitOfWork.Games.GetGames(), unitOfWork.Players.GetPlayers(), null, currentHighScore, true);
+            updateForm.ShowDialog();
+        }
     }
 }

@@ -38,6 +38,8 @@
             gameIndexBindingSource = new BindingSource(components);
             playerComboBox = new ComboBox();
             playerIndexBindingSource = new BindingSource(components);
+            playerLabel = new Label();
+            gameLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)scoreInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gameIndexBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerIndexBindingSource).BeginInit();
@@ -51,7 +53,7 @@
             updateHighScoreButton.TabIndex = 14;
             updateHighScoreButton.Text = "Update";
             updateHighScoreButton.UseVisualStyleBackColor = true;
-            updateHighScoreButton.Click += this.updateHighScoreButton_Click;
+            updateHighScoreButton.Click += updateHighScoreButton_Click;
             // 
             // scoreInput
             // 
@@ -92,7 +94,7 @@
             // 
             gameComboBox.DataSource = gameIndexBindingSource;
             gameComboBox.FormattingEnabled = true;
-            gameComboBox.Location = new Point(45, 100);
+            gameComboBox.Location = new Point(46, 103);
             gameComboBox.Name = "gameComboBox";
             gameComboBox.Size = new Size(274, 23);
             gameComboBox.TabIndex = 9;
@@ -114,11 +116,29 @@
             // 
             playerIndexBindingSource.DataSource = typeof(DTOsHS.PlayerIndex);
             // 
+            // playerLabel
+            // 
+            playerLabel.AutoSize = true;
+            playerLabel.Location = new Point(46, 51);
+            playerLabel.Name = "playerLabel";
+            playerLabel.Size = new Size(0, 15);
+            playerLabel.TabIndex = 15;
+            // 
+            // gameLabel
+            // 
+            gameLabel.AutoSize = true;
+            gameLabel.Location = new Point(46, 103);
+            gameLabel.Name = "gameLabel";
+            gameLabel.Size = new Size(0, 15);
+            gameLabel.TabIndex = 16;
+            // 
             // UpdateHighScoreForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(364, 284);
+            Controls.Add(gameLabel);
+            Controls.Add(playerLabel);
             Controls.Add(updateHighScoreButton);
             Controls.Add(scoreInput);
             Controls.Add(label3);
@@ -146,5 +166,7 @@
         private ComboBox playerComboBox;
         private BindingSource gameIndexBindingSource;
         private BindingSource playerIndexBindingSource;
+        private Label playerLabel;
+        private Label gameLabel;
     }
 }

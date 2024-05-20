@@ -33,6 +33,7 @@ namespace PLWinFormHS
                 Score = Decimal.ToInt32(scoreInput.Value),
                 Created = DateTime.Now,
                 Publisher = game.Publisher,
+                FullName = player.FullName,
             });
 
             this.Close();

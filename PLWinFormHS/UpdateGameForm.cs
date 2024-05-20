@@ -6,7 +6,7 @@ namespace PLWinFormHS
     {
         private int gameId;
         public Form1.UpdateGameDelegate UpdateGame = delegate { };
-        public UpdateGameForm(GameDetail gameDetail)
+        public UpdateGameForm(GameDetail gameDetail, bool isUpdateForm = false)
         {
             InitializeComponent();
 
@@ -14,7 +14,10 @@ namespace PLWinFormHS
             publisherInput.Text = gameDetail.Publisher;
             releaseDateInput.Value = gameDetail.ReleaseDate.ToDateTime(TimeOnly.MaxValue);
             notesInput.Text = gameDetail.Notes;
-            gameId = gameDetail.GameId; 
+            gameId = gameDetail.GameId;
+
+            if(isUpdateForm)
+                updateGameButton.Visible = false;
         }
 
         private void updateGameButton_Click(object sender, EventArgs e)

@@ -10,7 +10,10 @@
         public List<Player> Players => _players ??= LoadPlayers();
         public List<HighScore> HighScores => _highScores ??= LoadHighScores();
 
-        public string FilePath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        // DEMO DATA:
+        public string FilePath { get; set; } = Environment.CurrentDirectory;
+        // REAL DATA:
+        //public string FilePath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         public abstract int Save();
 

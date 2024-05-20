@@ -7,5 +7,6 @@
         public int Score { get; set; }
         public DateTime Created { get; set; }
         public string Publisher { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
     }
 }

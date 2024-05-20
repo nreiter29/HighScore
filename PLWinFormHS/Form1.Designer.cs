@@ -40,6 +40,11 @@
             releaseDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             gameIndexBindingSource = new BindingSource(components);
             dataGridView4 = new DataGridView();
+            gameIdDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            publisherDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            scoreDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            createdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            fullNameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             highScoreGameIndexBindingSource = new BindingSource(components);
             highScoreIndexBindingSource = new BindingSource(components);
             dataGridView3 = new DataGridView();
@@ -55,9 +60,10 @@
             button6 = new Button();
             saveButton = new Button();
             rollbackButton = new Button();
-            gameIdDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            scoreDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            createdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            playerDetailButton = new Button();
+            gameDetailButton = new Button();
+            highScoreDetailButton = new Button();
+            highScoreGameDetailButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerIndexBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -157,7 +163,7 @@
             dataGridView4.AutoGenerateColumns = false;
             dataGridView4.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView4.Columns.AddRange(new DataGridViewColumn[] { gameIdDataGridViewTextBoxColumn1, scoreDataGridViewTextBoxColumn, createdDataGridViewTextBoxColumn });
+            dataGridView4.Columns.AddRange(new DataGridViewColumn[] { gameIdDataGridViewTextBoxColumn1, publisherDataGridViewTextBoxColumn, scoreDataGridViewTextBoxColumn, createdDataGridViewTextBoxColumn, fullNameDataGridViewTextBoxColumn1 });
             dataGridView4.DataSource = highScoreGameIndexBindingSource;
             dataGridView4.Location = new Point(652, 357);
             dataGridView4.Name = "dataGridView4";
@@ -165,6 +171,43 @@
             dataGridView4.Size = new Size(341, 150);
             dataGridView4.TabIndex = 3;
             dataGridView4.CellDoubleClick += dataGridView4_CellDoubleClick;
+            // 
+            // gameIdDataGridViewTextBoxColumn1
+            // 
+            gameIdDataGridViewTextBoxColumn1.DataPropertyName = "GameId";
+            gameIdDataGridViewTextBoxColumn1.HeaderText = "GameId";
+            gameIdDataGridViewTextBoxColumn1.Name = "gameIdDataGridViewTextBoxColumn1";
+            gameIdDataGridViewTextBoxColumn1.ReadOnly = true;
+            gameIdDataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // publisherDataGridViewTextBoxColumn
+            // 
+            publisherDataGridViewTextBoxColumn.DataPropertyName = "Publisher";
+            publisherDataGridViewTextBoxColumn.HeaderText = "Publisher";
+            publisherDataGridViewTextBoxColumn.Name = "publisherDataGridViewTextBoxColumn";
+            publisherDataGridViewTextBoxColumn.ReadOnly = true;
+            publisherDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // scoreDataGridViewTextBoxColumn
+            // 
+            scoreDataGridViewTextBoxColumn.DataPropertyName = "Score";
+            scoreDataGridViewTextBoxColumn.HeaderText = "Score";
+            scoreDataGridViewTextBoxColumn.Name = "scoreDataGridViewTextBoxColumn";
+            scoreDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // createdDataGridViewTextBoxColumn
+            // 
+            createdDataGridViewTextBoxColumn.DataPropertyName = "Created";
+            createdDataGridViewTextBoxColumn.HeaderText = "Created";
+            createdDataGridViewTextBoxColumn.Name = "createdDataGridViewTextBoxColumn";
+            createdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fullNameDataGridViewTextBoxColumn1
+            // 
+            fullNameDataGridViewTextBoxColumn1.DataPropertyName = "FullName";
+            fullNameDataGridViewTextBoxColumn1.HeaderText = "FullName";
+            fullNameDataGridViewTextBoxColumn1.Name = "fullNameDataGridViewTextBoxColumn1";
+            fullNameDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // highScoreGameIndexBindingSource
             // 
@@ -304,33 +347,55 @@
             rollbackButton.UseVisualStyleBackColor = true;
             rollbackButton.Click += rollbackButton_Click;
             // 
-            // gameIdDataGridViewTextBoxColumn1
+            // playerDetailButton
             // 
-            gameIdDataGridViewTextBoxColumn1.DataPropertyName = "GameId";
-            gameIdDataGridViewTextBoxColumn1.HeaderText = "GameId";
-            gameIdDataGridViewTextBoxColumn1.Name = "gameIdDataGridViewTextBoxColumn1";
-            gameIdDataGridViewTextBoxColumn1.ReadOnly = true;
-            gameIdDataGridViewTextBoxColumn1.Visible = false;
+            playerDetailButton.Location = new Point(308, 195);
+            playerDetailButton.Name = "playerDetailButton";
+            playerDetailButton.Size = new Size(75, 23);
+            playerDetailButton.TabIndex = 15;
+            playerDetailButton.Text = "Details";
+            playerDetailButton.UseVisualStyleBackColor = true;
+            playerDetailButton.Click += playerDetailButton_Click;
             // 
-            // scoreDataGridViewTextBoxColumn
+            // gameDetailButton
             // 
-            scoreDataGridViewTextBoxColumn.DataPropertyName = "Score";
-            scoreDataGridViewTextBoxColumn.HeaderText = "Score";
-            scoreDataGridViewTextBoxColumn.Name = "scoreDataGridViewTextBoxColumn";
-            scoreDataGridViewTextBoxColumn.ReadOnly = true;
+            gameDetailButton.Location = new Point(918, 195);
+            gameDetailButton.Name = "gameDetailButton";
+            gameDetailButton.Size = new Size(75, 23);
+            gameDetailButton.TabIndex = 16;
+            gameDetailButton.Text = "Details";
+            gameDetailButton.UseVisualStyleBackColor = true;
+            gameDetailButton.Click += gameDetailButton_Click;
             // 
-            // createdDataGridViewTextBoxColumn
+            // highScoreDetailButton
             // 
-            createdDataGridViewTextBoxColumn.DataPropertyName = "Created";
-            createdDataGridViewTextBoxColumn.HeaderText = "Created";
-            createdDataGridViewTextBoxColumn.Name = "createdDataGridViewTextBoxColumn";
-            createdDataGridViewTextBoxColumn.ReadOnly = true;
+            highScoreDetailButton.Location = new Point(308, 513);
+            highScoreDetailButton.Name = "highScoreDetailButton";
+            highScoreDetailButton.Size = new Size(75, 23);
+            highScoreDetailButton.TabIndex = 17;
+            highScoreDetailButton.Text = "Details";
+            highScoreDetailButton.UseVisualStyleBackColor = true;
+            highScoreDetailButton.Click += highScoreDetailButton_Click;
+            // 
+            // highScoreGameDetailButton
+            // 
+            highScoreGameDetailButton.Location = new Point(918, 513);
+            highScoreGameDetailButton.Name = "highScoreGameDetailButton";
+            highScoreGameDetailButton.Size = new Size(75, 23);
+            highScoreGameDetailButton.TabIndex = 18;
+            highScoreGameDetailButton.Text = "Details";
+            highScoreGameDetailButton.UseVisualStyleBackColor = true;
+            highScoreGameDetailButton.Click += highScoreGameDetailButton_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1029, 561);
+            Controls.Add(highScoreGameDetailButton);
+            Controls.Add(highScoreDetailButton);
+            Controls.Add(gameDetailButton);
+            Controls.Add(playerDetailButton);
             Controls.Add(rollbackButton);
             Controls.Add(saveButton);
             Controls.Add(button5);
@@ -346,7 +411,7 @@
             Controls.Add(dataGridView2);
             Controls.Add(dataGridView1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "MainForm";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerIndexBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
@@ -371,7 +436,6 @@
         private DataGridViewTextBoxColumn releaseDateDataGridViewTextBoxColumn;
         private BindingSource gameIndexBindingSource;
         private DataGridView dataGridView4;
-        private BindingSource highScoreGameIndexBindingSource;
         private BindingSource highScoreIndexBindingSource;
         private DataGridView dataGridView3;
         private DataGridViewTextBoxColumn scoreDataGridViewTextBoxColumn1;
@@ -386,8 +450,15 @@
         private Button button6;
         private Button saveButton;
         private Button rollbackButton;
+        private BindingSource highScoreGameIndexBindingSource;
         private DataGridViewTextBoxColumn gameIdDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn publisherDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn scoreDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn createdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn fullNameDataGridViewTextBoxColumn1;
+        private Button playerDetailButton;
+        private Button gameDetailButton;
+        private Button highScoreDetailButton;
+        private Button highScoreGameDetailButton;
     }
 }
