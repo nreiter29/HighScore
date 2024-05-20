@@ -11,7 +11,7 @@
         public List<HighScore> HighScores => _highScores ??= LoadHighScores();
 
         // DEMO DATA:
-        public string FilePath { get; set; } = Environment.CurrentDirectory;
+        public string FilePath { get; set; } = new DirectoryInfo(Environment.CurrentDirectory).Parent?.Parent?.Parent?.Parent?.FullName + @"/DemoJson/";
         // REAL DATA:
         //public string FilePath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
